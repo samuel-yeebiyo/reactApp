@@ -4,85 +4,22 @@ import { Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableO
 import {NavigationContainer, StackActions} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import Item from './components/Item';
+import Navigator from './routes/welcomeStack'
+import HomeScreen from './screens/home'
 
 
-function HomeScreen(){
-  return (
-    <View style={styles.inner}>
-      <Text>This is the text I want here</Text>
-    </View>
-  )
-}
 
 const Stack = createStackNavigator();
 
 export default function App() {
 
-  const [item, setItem] = useState();
-  const [taskItems, setTaskItems] = useState([]);
-
-  const handleAddItem = () =>{
-    Keyboard.dismiss();
-    setTaskItems([...taskItems, item]);
-    setItem(null);
-  }
-
-  const completeTask = (index) =>{
-    let copy = [...taskItems];
-    copy.splice(index, 1);
-    setTaskItems(copy);
-  }
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      
-      {/*title*/}
-      <View style={styles.inner}>
-        <Text style={styles.title}>App Title</Text>
 
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="Back" component={HomeScreen}/>
-          </Stack.Navigator>
-        </NavigationContainer>
-
-        {/*items*/}
-        <View style={styles.list}>
-          {
-            taskItems.map((item, index) =>{
-              return (
-                <TouchableOpacity key={index} onPress={()=>completeTask(index)}>
-                  <Item key={index} text={item}/>
-                </TouchableOpacity>
-              )
-            })    
-          } 
-        </View>
-
-      </View>
-
-      {/*modification*/}
-      <KeyboardAvoidingView 
-        behavior="height"
-        style={styles.write}
-        >
-        {/*Text input*/}
-        <TextInput
-        style={styles.input}
-        placeholder={"Add a task"}
-        value={item}
-        onChangeText={text => setItem(text)}>
-        </TextInput>
-
-        {/*Button*/}
-        <TouchableOpacity onPress={() => handleAddItem()}>
-          <View style={styles.adding}>
-            <Text style={styles.addText}>+</Text>
-          </View>
-        </TouchableOpacity>
-
-      </KeyboardAvoidingView>
-
+      <NavigationContainer>
+        <Navigator/>
+      </NavigationContainer>
     </View>
   );
 }
@@ -90,11 +27,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     display:'flex',
-    width:'90%',
+    width:'100%',
     height:'100%',
-    backgroundColor:'#FFF',
-    paddingTop:50,
-    marginLeft:20,
+    backgroundColor:'#000',
+    paddingTop:0,
+    marginLeft:0,
     //flex: 1,
     //backgroundColor: '#fff',
     //alignItems: 'center',
