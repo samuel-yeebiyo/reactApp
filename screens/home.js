@@ -18,7 +18,7 @@ function HomeScreen({navigation}){
             <TouchableOpacity>
                 <Text style={styles.continue} onPress={()=>navigation.navigate('Sign In')}>Continue</Text>
             </TouchableOpacity>
-            <View style={styles.access}>
+            <View style={styles.access} KeyboardAvoidingView={false}>
                 <TouchableOpacity style={styles.buttonLeft} onPress={()=>navigation.navigate('Register')}>
                     <Text style = {styles.buText}>Register</Text>
                 </TouchableOpacity>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         paddingTop:50,
         paddingLeft:20,
         paddingRight:20,
-        alignItems:'center'
+        alignItems:'center',
     },
     hero:{
         width:'80%',

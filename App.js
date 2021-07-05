@@ -32,41 +32,5 @@ const styles = StyleSheet.create({
     backgroundColor:'#000',
     paddingTop:0,
     marginLeft:0,
-    //flex: 1,
-    //backgroundColor: '#fff',
-    //alignItems: 'center',
-    //justifyContent: 'center',
-  },
-  title: {
-    color:'#000',
-    fontSize:24,
-    fontWeight:'bold'
-  },
-  text: {
-    color:'#000'
-  },
-  write:{
-    position:'absolute',
-    bottom:30,
-    flexDirection:'row',
-    width:'99%',
-    justifyContent:'space-between'
-  },
-  input:{
-    backgroundColor:'#E4E4E4',
-    width:'70%',
-    height:40,
-    paddingHorizontal:15,
-    borderRadius:20
-  },
-  adding:{
-    width:40,
-    height:40,
-    borderRadius:60,
-    backgroundColor:'#E4E4E4',
-    justifyContent:'center',
-    alignItems:'center'
-  },
-  addText:{},
-
+  }
 });
