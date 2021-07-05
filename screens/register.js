@@ -13,12 +13,39 @@ import Input from '../components/Input'
 const Register = ({navigation}) => {
 
     const[password, setPassword]= useState();
+    const[user, setUser]=useState({})
 
 
     const {control, handleSubmit, formState: {errors}} = useForm();
-    const onSubmit = (data) => {
+    
+    
+    const onSubmit = async (data) => {
         console.log(data);
+        // const rawResponse = await fetch('http://192.168.10.159:3000/users/', {
+        //     method:'POST',
+        //     headers:{
+        //         'Accept':'application/json',
+        //         'Content-Type':'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         username:data.username,
+        //         passnumber:data.passnumber,
+        //         password:data.password
+        //     })
+        // }).then(response => response.json())
+        // .then(data=> {
+        //     const permission = data;
+        //     console.log(permission);
+        //     setUser(data);
+        //     if(permission.allow == true){
+        //         navigation.navigate('Dashboard', user);
+        //     }
+            
+        // })
+        navigation.navigate('Dashboard', data);
+        
     };
+
 
     var PN_REGEX = /^(?!^0+$)[a-zA-Z0-9]{6,9}$/g;
     var PASS_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/g;

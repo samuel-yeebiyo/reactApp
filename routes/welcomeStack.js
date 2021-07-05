@@ -7,6 +7,7 @@ import {enableScreens} from 'react-native-screens'
 import Home from '../screens/home'
 import In from '../screens/signin'
 import Register from '../screens/register'
+import Dashboard from '../screens/dashboard'
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -17,6 +18,7 @@ function MyStack(){
             <Stack.Screen name="Welcome" component={Home}/>
             <Stack.Screen name="Sign In" component={In}/>
             <Stack.Screen name="Register" component={Register}/>
+            <Stack.Screen name="Dashboard" component={Dashboard}/>
         </Stack.Navigator>
     )
 }
