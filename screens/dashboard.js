@@ -8,7 +8,7 @@ import { block } from 'react-native-reanimated';
 
 
 function Dashboard({route, navigation}){
-    const {username, passnumber} = route.params;
+    const {name, passport} = route.params;
     {/* To output from params {JSON.stringify(username)} */}
 
     return (
@@ -16,8 +16,8 @@ function Dashboard({route, navigation}){
         <View style={styles.dash}>
             <View style={styles.top}>
                 <View>
-                    <Text style={styles.welcome}>Welcome {JSON.parse(JSON.stringify(username))}!</Text>
-                    <Text style={styles.sub}>{JSON.parse(JSON.stringify(passnumber))}</Text>
+                    <Text style={styles.welcome}>Welcome {JSON.parse(JSON.stringify(name))}!</Text>
+                    <Text style={styles.sub}>{JSON.parse(JSON.stringify(passport))}</Text>
                 </View>
 
                 <TouchableOpacity style={styles.pic}/>

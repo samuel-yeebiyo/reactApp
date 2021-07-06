@@ -21,29 +21,32 @@ const Register = ({navigation}) => {
     
     const onSubmit = async (data) => {
         console.log(data);
-        // const rawResponse = await fetch('http://192.168.10.159:3000/users/', {
-        //     method:'POST',
-        //     headers:{
-        //         'Accept':'application/json',
-        //         'Content-Type':'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         username:data.username,
-        //         passnumber:data.passnumber,
-        //         password:data.password
-        //     })
-        // }).then(response => response.json())
-        // .then(data=> {
-        //     const permission = data;
-        //     console.log(permission);
-        //     setUser(data);
-        //     if(permission.allow == true){
-        //         navigation.navigate('Dashboard', user);
-        //     }
+        const rawResponse = await fetch('http://192.168.10.159:3000/users/', {
+            method:'POST',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                name:data.username,
+                passport:data.passnumber,
+                password:data.password
+            })
+        }).then(response => response.json())
+        .then(final=> {
+            console.log("returned")
+            const permission = final.allow;
+            const userReturned = final.payload;
+
+            console.log("Permission:", permission);
             
-        // })
-        navigation.navigate('Dashboard', data);
-        
+            console.log("Returned User:",JSON.stringify(userReturned))
+
+            if(permission == true){
+                console.log("Allowed")
+                navigation.navigate('Dashboard', userReturned);
+            }
+        })        
     };
 
 
@@ -93,7 +96,7 @@ const Register = ({navigation}) => {
                 control={control}
                 rules={{required:true,}}
                 render={({field:{onChange, value}})=>(
-                    <Input error = {errors.password} errorText={errors.password?.message} style={styles.input} placeholder={"Password"} onChangeText={value => {onChange(value), setPassword(value)}} value={value} />
+                    <Input secureTextEntry={true} error = {errors.password} errorText={errors.password?.message} style={styles.input} placeholder={"Password"} onChangeText={value => {onChange(value), setPassword(value)}} value={value} />
                 )}
                 name="password"
                 rules={{
@@ -111,7 +114,7 @@ const Register = ({navigation}) => {
                 control={control}
                 rules={{required:true,}}
                 render={({field:{onChange, password, value}})=>(
-                    <Input error = {errors.passagain} errorText={errors.passagain?.message} style={styles.input} style={styles.input} placeholder={"Confirm Password"} onChangeText={value => {
+                    <Input secureTextEntry={true} error = {errors.passagain} errorText={errors.passagain?.message} style={styles.input} style={styles.input} placeholder={"Confirm Password"} onChangeText={value => {
                         onChange(value);
                         if(value == password){
                             console.log(value);
