@@ -1,21 +1,35 @@
-import React, {useState} from 'react';
-import { Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import {NavigationContainer, StackActions} from '@react-navigation/native'
+import React, {useState, useEffect} from 'react';
+import { Keyboard, KeyboardAvoidingView, StyleSheet, ImageBackground, Text, TextInput, TouchableOpacity, View, BackHandler, Alert} from 'react-native';
+import {CommonActions, NavigationContainer, StackActions} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import Item from '../components/Item';
 import Navigator from '../routes/welcomeStack'
 import {useForm, Controller }from 'react-hook-form'
 import Input from '../components/Input'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { onChange, Value } from 'react-native-reanimated';
 
-const SignIn = ({navigation}) => {
+const SignIn = ({route, navigation}) => {
 
     const[user, setUser]=useState({})
 
     const {control, handleSubmit, formState:{errors}} = useForm();
 
+    const constructor = () =>{
+        console.log("Passed Sign in")
+    }
+    constructor()
+
+    const persist = async(data) =>{
+        try{
+            await AsyncStorage.setItem('user', data);
+            console.log("User has been cached")
+        }catch(errs){
+            console.log(errs)
+        }
+    }
+
     const onSubmit = async (data)=>{
-        console.log(data);
         const rawResponse = await fetch('http://192.168.10.159:3000/users/login',{
             method:'POST',
             headers:{
@@ -35,11 +49,16 @@ const SignIn = ({navigation}) => {
 
             console.log("Permission:", permission);
             
-            console.log("Returned User:",JSON.stringify(userReturned))
+            const jsonString = JSON.stringify(userReturned)
+            console.log("Returned User:", jsonString)
+            
+
+            persist(jsonString)
 
             if(permission == true){
                 console.log("Allowed")
-                navigation.navigate('Dashboard', userReturned);
+                console.log("Popping")
+                navigation.replace("app", {screen:"Dashboard", params: userReturned})
             }
         })
     }
@@ -104,7 +123,7 @@ const styles = StyleSheet.create({
         paddingTop:50,
         paddingLeft:20,
         paddingRight:20,
-        alignItems:'center'
+        alignItems:'center',
     },
     hero:{
         width:'80%',

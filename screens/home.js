@@ -2,32 +2,62 @@ import React, {useState} from 'react';
 import { Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, Button, TouchableOpacity, View } from 'react-native';
 import {NavigationContainer, StackActions} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Item from '../components/Item';
 import Navigator from '../routes/welcomeStack'
 
 
 function HomeScreen({navigation}){
+
+    const [state, setState] = useState({})
+
+    // const init = async() =>{
+    //     console.log("contructor called")
+    //     try{
+    //         const jsonValue = await AsyncStorage.getItem('user');
+    //         //await AsyncStorage.clear()
+    //         console.log(jsonValue)
+    //         if(jsonValue != null){
+    //             console.log("User found");
+    //             //setState(JSON.parse(jsonValue));
+    //             console.log("Passing to dashboard: ", jsonValue)
+    //             navigation.navigate('Dashboard', jsonValue);
+    //         }else{
+    //             console.log("Not logged in!");
+    //         }
+    //     }catch(e){
+    //         console.log(e);
+    //     }
+    // }
+    // init();
+
+
+    const constructor = () =>{
+        console.log("Passed Home")
+    }
+    constructor()
+
     return (
-      <View style={styles.main}>
-        <View style={styles.hero}>
-            <Text style={styles.bigText}>COVID-19 Vaccination Information System</Text>
-            <Text style={styles.info}>Create an account to start booking and tracking your vaccine information</Text>
-            <Text style={styles.info}>Continue without an account to check available bookings and query information</Text>
-        </View>
-        <View style={styles.buttons}>
-            <TouchableOpacity>
-                <Text style={styles.continue} onPress={()=>navigation.navigate('Sign In')}>Continue</Text>
-            </TouchableOpacity>
-            <View style={styles.access} KeyboardAvoidingView={false}>
-                <TouchableOpacity style={styles.buttonLeft} onPress={()=>navigation.navigate('Register')}>
-                    <Text style = {styles.buText}>Register</Text>
+        <View style={styles.main}>
+            <View style={styles.hero}>
+                <Text style={styles.bigText}>COVID-19 Vaccination Information System</Text>
+                <Text style={styles.info}>Create an account to start booking and tracking your vaccine information</Text>
+                <Text style={styles.info}>Continue without an account to check available bookings and query information</Text>
+            </View>
+            <View style={styles.buttons}>
+                <TouchableOpacity>
+                    <Text style={styles.continue} onPress={()=>navigation.navigate("app", {screen:'Dashboard', params:{name:"",passport:""}})}>Continue</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonRight} onPress={()=>navigation.navigate('Sign In')}>
-                    <Text style = {styles.buText}>Sign In</Text>
-                </TouchableOpacity>
+                <View style={styles.access} KeyboardAvoidingView={false}>
+                    <TouchableOpacity style={styles.buttonLeft} onPress={()=>navigation.navigate('Register', {from:'home'})}>
+                        <Text style = {styles.buText}>Register</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonRight} onPress={()=>navigation.navigate('Sign In', {from:'home'})}>
+                        <Text style = {styles.buText}>Sign In</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
-      </View>
     );
 }
 
@@ -105,8 +135,8 @@ const styles = StyleSheet.create({
     },
     buText:{
         textAlign:'center',
-        color:'#FFF'
-        
+        color:'#FFF',
+        fontWeight:'bold'        
     }
 
     

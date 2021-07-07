@@ -1,15 +1,50 @@
-import React, {useState} from 'react';
-import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Button, TouchableOpacity, View } from 'react-native';
-import {NavigationContainer, StackActions} from '@react-navigation/native'
+import React, {useState, useEffect} from 'react';
+import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Button, TouchableWithoutFeedback,TouchableOpacity, View, BackHandler } from 'react-native';
+import {NavigationContainer, CommonActions, StackActions} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import Item from '../components/Item';
 import Navigator from '../routes/welcomeStack'
 import { block } from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 
 function Dashboard({route, navigation}){
-    const {name, passport} = route.params;
+    let jsonParsed;
+    if(typeof(route.params)== 'string'){
+        jsonParsed = JSON.parse(route.params)
+    }else{
+        jsonParsed = route.params
+    }
+    const {name, passport} = jsonParsed;
     {/* To output from params {JSON.stringify(username)} */}
+
+
+    const signOut = async() => {
+        try{
+            console.log("Signing out!");
+            await AsyncStorage.clear()
+
+            navigation.replace('Welcome')
+        }catch(e){
+            console.log(e);
+        }
+    }
+
+    useEffect( () =>{
+        const backAction = () =>{
+            if(route.params.name == ""){
+                navigation.navigate('Welcome')
+            }else{
+                BackHandler.exitApp()
+            }
+            return true
+        }
+        const backHandler = BackHandler.addEventListener('hardwareBackPress',backAction)
+        return ()=>backHandler.remove()
+    }, []);
+
+
 
     return (
       <View style={styles.main}>
@@ -20,7 +55,7 @@ function Dashboard({route, navigation}){
                     <Text style={styles.sub}>{JSON.parse(JSON.stringify(passport))}</Text>
                 </View>
 
-                <TouchableOpacity style={styles.pic}/>
+                <TouchableOpacity style={styles.pic} onPress={()=> signOut()}/>
             </View>
         </View>
         <View style={styles.board}>
@@ -34,37 +69,38 @@ function Dashboard({route, navigation}){
                     {/*add action on press*/}
                     <View style={styles.menu}>
                         <ScrollView style={styles.menuContainer} horizontal showsHorizontalScrollIndicator={false}>
-                            <TouchableOpacity style={styles.menuCard} > 
-                                <View style={styles.imageContainer1}>
+                            <View style={styles.menuCard} > 
+                                <TouchableOpacity style={styles.imageContainer1}>
                                     <Image style={styles.image} source={require('../assets/trial.jpg')}/>
-                                </View>
-                                <View style={styles.text}>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.text}>
                                     <Text style={styles.title}>Certain Text</Text>
                                     <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.menuCard} > 
-                                <View style={styles.imageContainer1}>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.menuCard} > 
+                                <TouchableOpacity style={styles.imageContainer1}>
                                     <Image style={styles.image} source={require('../assets/trial.jpg')}/>
-                                </View>
-                                <View style={styles.text}>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.text}>
                                     <Text style={styles.title}>Certain Text</Text>
                                     <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.menuCard} > 
-                                <View style={styles.imageContainer1}>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.menuCard} > 
+                                <TouchableOpacity style={styles.imageContainer1}>
                                     <Image style={styles.image} source={require('../assets/trial.jpg')}/>
-                                </View>
-                                <View style={styles.text}>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.text}>
                                     <Text style={styles.title}>Certain Text</Text>
                                     <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
-                                </View>
-                            </TouchableOpacity>
+                                </TouchableOpacity>
+                            </View>
                             <View style={styles.pad}></View>
                         </ScrollView>
 
                     </View>
+                    {!!name && <>
                     <TouchableOpacity style={styles.card} > 
                         <View style={styles.imageContainer2}>
                             <Image style={styles.image} source={require('../assets/trial.jpg')}/>
@@ -101,6 +137,7 @@ function Dashboard({route, navigation}){
                             <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
                         </View>
                     </TouchableOpacity>
+                </>}
                     
                     <View style={styles.pad}></View>
                 </ScrollView>
@@ -156,7 +193,7 @@ const styles = StyleSheet.create({
     board:{
         height:'84%',
         backgroundColor:'#FFF',
-        width:'93%',
+        width:'95%',
         borderTopLeftRadius:35,
         borderTopRightRadius:35,
         zIndex:2,
@@ -235,7 +272,7 @@ const styles = StyleSheet.create({
         shadowOffset:{width:0, height:4},
         shadowOpacity:0,
         shadowRadius:4,
-        elevation:8
+        elevation:4
     },
     
     description:{

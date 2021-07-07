@@ -6,6 +6,7 @@ import Item from '../components/Item';
 import Navigator from '../routes/welcomeStack'
 import {useForm, Controller }from 'react-hook-form'
 import { onChange } from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Input from '../components/Input'
 
 
@@ -17,6 +18,11 @@ const Register = ({navigation}) => {
 
 
     const {control, handleSubmit, formState: {errors}} = useForm();
+
+    const constructor = () =>{
+        console.log("Passed Register")
+    }
+    constructor()
     
     
     const onSubmit = async (data) => {
@@ -40,14 +46,25 @@ const Register = ({navigation}) => {
 
             console.log("Permission:", permission);
             
-            console.log("Returned User:",JSON.stringify(userReturned))
+            const jsonString = JSON.stringify(userReturned)
+            console.log("Returned User:",jsonString)
+
+            persist(jsonString);
 
             if(permission == true){
                 console.log("Allowed")
-                navigation.navigate('Dashboard', userReturned);
+                navigation.navigate("app", {screen:'Dashboard', params: jsonString});
             }
         })        
     };
+
+    const persist = async(data) =>{
+        try{
+            await AsyncStorage.setItem('user', data);
+        }catch(errs){
+            console.log(errs)
+        }
+    }
 
 
     var PN_REGEX = /^(?!^0+$)[a-zA-Z0-9]{6,9}$/g;
