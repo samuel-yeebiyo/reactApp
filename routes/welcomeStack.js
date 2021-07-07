@@ -10,7 +10,7 @@ import In from '../screens/signin'
 import Register from '../screens/register'
 import Dashboard from '../screens/dashboard'
 import splashScreen from '../screens/splash'
-import Transit from '../screens/transit'
+import AdminPage from '../screens/adminPage'
 import { initialWindowMetrics } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -25,6 +25,7 @@ const authScreen = () =>{
         <Stack.Screen name="Sign In" component={In}/>
         <Stack.Screen name="Register" component={Register}/>
         <Stack.Screen name="app" component={appScreen}/>
+        <Stack.Screen name="admin" component={adminStack}/>
     </Stack.Navigator>
     )
 }
@@ -38,6 +39,16 @@ const appScreen = () =>{
         </Stack.Navigator>
     )
 }
+
+const adminStack = () =>{
+    return(
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="adminPage" initialParams={value} component={AdminPage}/>
+            <Stack.Screen name="auth" component={authScreen}/>
+        </Stack.Navigator>
+    )
+}
+
 let value;
 
 function MyStack(){

@@ -30,6 +30,7 @@ const SignIn = ({route, navigation}) => {
     }
 
     const onSubmit = async (data)=>{
+        console.log(data)
         const rawResponse = await fetch('http://192.168.10.159:3000/users/login',{
             method:'POST',
             headers:{
@@ -55,10 +56,13 @@ const SignIn = ({route, navigation}) => {
 
             persist(jsonString)
 
-            if(permission == true){
+            if(permission == true && userReturned.auth == "BASIC"){
                 console.log("Allowed")
                 console.log("Popping")
                 navigation.replace("app", {screen:"Dashboard", params: userReturned})
+            }else if(permission == true && userReturned.auth == "ADMIN"){
+                console.log("Admin logging in ...")
+                navigation.replace("admin", {screen:"adminPage", params:userReturned})
             }
         })
     }

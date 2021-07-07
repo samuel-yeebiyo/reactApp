@@ -46,7 +46,7 @@ function HomeScreen({navigation}){
             </View>
             <View style={styles.buttons}>
                 <TouchableOpacity>
-                    <Text style={styles.continue} onPress={()=>navigation.navigate("app", {screen:'Dashboard', params:{name:"",passport:""}})}>Continue</Text>
+                    <Text style={styles.continue} onPress={()=>navigation.navigate("app", {screen:'Dashboard', params:{identity:"",passport:""}})}>Continue</Text>
                 </TouchableOpacity>
                 <View style={styles.access} KeyboardAvoidingView={false}>
                     <TouchableOpacity style={styles.buttonLeft} onPress={()=>navigation.navigate('Register', {from:'home'})}>

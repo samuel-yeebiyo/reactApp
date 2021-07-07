@@ -9,14 +9,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
-function Dashboard({route, navigation}){
+function adminPage({route, navigation}){
     let jsonParsed;
     if(typeof(route.params)== 'string'){
         jsonParsed = JSON.parse(route.params)
     }else{
         jsonParsed = route.params
     }
-    const {identity, passport} = jsonParsed;
+    console.log(typeof(jsonParsed))
+    const {identity} = jsonParsed;
     {/* To output from params {JSON.stringify(username)} */}
 
 
@@ -33,11 +34,7 @@ function Dashboard({route, navigation}){
 
     useEffect( () =>{
         const backAction = () =>{
-            if(route.params.identity == ""){
-                navigation.navigate('Welcome')
-            }else{
-                BackHandler.exitApp()
-            }
+            BackHandler.exitApp()
             return true
         }
         const backHandler = BackHandler.addEventListener('hardwareBackPress',backAction)
@@ -52,7 +49,7 @@ function Dashboard({route, navigation}){
             <View style={styles.top}>
                 <View>
                     <Text style={styles.welcome}>Welcome {JSON.parse(JSON.stringify(identity))}!</Text>
-                    <Text style={styles.sub}>{JSON.parse(JSON.stringify(passport))}</Text>
+                    <Text style={styles.sub}>Administrator</Text>
                 </View>
 
                 <TouchableOpacity style={styles.pic} onPress={()=> signOut()}/>
@@ -61,11 +58,6 @@ function Dashboard({route, navigation}){
         <View style={styles.board}>
             <View style={styles.wrapper}>
                 <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                    <View style={styles.status}>
-                        <Text>Vaccination Status:</Text>
-                        {/*Add from params*/}
-                        <Text>Not Vaccinated</Text>
-                    </View>
                     {/*add action on press*/}
                     <View style={styles.menu}>
                         <ScrollView style={styles.menuContainer} horizontal showsHorizontalScrollIndicator={false}>
@@ -87,47 +79,10 @@ function Dashboard({route, navigation}){
                                     <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={styles.menuCard} > 
-                                <TouchableOpacity style={styles.imageContainer1}>
-                                    <Image style={styles.image} source={require('../assets/trial.jpg')}/>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.text}>
-                                    <Text style={styles.title}>Certain Text</Text>
-                                    <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.pad}></View>
                         </ScrollView>
 
                     </View>
                     {!!identity && <>
-                    <TouchableOpacity style={styles.card} > 
-                        <View style={styles.imageContainer2}>
-                            <Image style={styles.image} source={require('../assets/trial.jpg')}/>
-                        </View>
-                        <View style={styles.cardText}>
-                            <Text style={styles.title}>This is the Title</Text>
-                            <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.card} > 
-                        <View style={styles.imageContainer2}>
-                            <Image style={styles.image} source={require('../assets/trial.jpg')}/>
-                        </View>
-                        <View style={styles.cardText}>
-                            <Text style={styles.title}>This is the Title</Text>
-                            <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.card} > 
-                        <View style={styles.imageContainer2}>
-                            <Image style={styles.image} source={require('../assets/trial.jpg')}/>
-                        </View>
-                        <View style={styles.cardText}>
-                            <Text style={styles.title}>This is the Title</Text>
-                            <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
-                        </View>
-                    </TouchableOpacity>
                     <TouchableOpacity style={styles.card} > 
                         <View style={styles.imageContainer2}>
                             <Image style={styles.image} source={require('../assets/trial.jpg')}/>
@@ -323,4 +278,4 @@ const styles = StyleSheet.create({
     
 })
 
-export default Dashboard;
+export default adminPage;
