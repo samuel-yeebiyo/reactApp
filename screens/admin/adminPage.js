@@ -2,21 +2,22 @@ import React, {useState, useEffect} from 'react';
 import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Button, TouchableWithoutFeedback,TouchableOpacity, View, BackHandler } from 'react-native';
 import {NavigationContainer, CommonActions, StackActions} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
-import Item from '../components/Item';
-import Navigator from '../routes/welcomeStack'
+import Item from '../../components/Item';
+import Navigator from '../../routes/welcomeStack'
 import { block } from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
-function Dashboard({route, navigation}){
+function adminPage({route, navigation}){
     let jsonParsed;
     if(typeof(route.params)== 'string'){
         jsonParsed = JSON.parse(route.params)
     }else{
         jsonParsed = route.params
     }
-    const {identity, passport} = jsonParsed;
+    console.log(typeof(jsonParsed))
+    const {identity} = jsonParsed;
     {/* To output from params {JSON.stringify(username)} */}
 
 
@@ -33,15 +34,16 @@ function Dashboard({route, navigation}){
 
     useEffect( () =>{
         const backAction = () =>{
-            if(route.params.identity == ""){
-                navigation.navigate('Welcome')
-            }else{
+            if(route.name == "adminPage"){
                 BackHandler.exitApp()
+                return true;
+            }else{
+                return false;
             }
-            return true
-        }
-        const backHandler = BackHandler.addEventListener('hardwareBackPress',backAction)
-        return ()=>backHandler.remove()
+        };
+        const backHandler = BackHandler.addEventListener('hardwareBackPress',backAction.bind(this));
+        
+        return () => BackHandler.removeEventListener('hardwareBackPress', backAction);
     }, []);
 
 
@@ -52,7 +54,7 @@ function Dashboard({route, navigation}){
             <View style={styles.top}>
                 <View>
                     <Text style={styles.welcome}>Welcome {JSON.parse(JSON.stringify(identity))}!</Text>
-                    <Text style={styles.sub}>{JSON.parse(JSON.stringify(passport))}</Text>
+                    <Text style={styles.sub}>Administrator</Text>
                 </View>
 
                 <TouchableOpacity style={styles.pic} onPress={()=> signOut()}/>
@@ -61,83 +63,58 @@ function Dashboard({route, navigation}){
         <View style={styles.board}>
             <View style={styles.wrapper}>
                 <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                    <View style={styles.status}>
-                        <Text>Vaccination Status:</Text>
-                        {/*Add from params*/}
-                        <Text>Not Vaccinated</Text>
-                    </View>
                     {/*add action on press*/}
                     <View style={styles.menu}>
                         <ScrollView style={styles.menuContainer} horizontal showsHorizontalScrollIndicator={false}>
                             <View style={styles.menuCard} > 
                                 <TouchableOpacity style={styles.imageContainer1}>
-                                    <Image style={styles.image} source={require('../assets/trial.jpg')}/>
+                                    <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.text}>
-                                    <Text style={styles.title}>Certain Text</Text>
-                                    <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.menuCard} > 
-                                <TouchableOpacity style={styles.imageContainer1}>
-                                    <Image style={styles.image} source={require('../assets/trial.jpg')}/>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.text}>
-                                    <Text style={styles.title}>Certain Text</Text>
-                                    <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
+                                <TouchableOpacity style={styles.text} onPress={()=>navigation.navigate('addUser', jsonParsed)}>
+                                    <Text style={styles.title}>Manage Users</Text>
+                                    <Text style={styles.description}>Modify, add, or remove users from the database. Alert: data persistence removal will be a problem</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.menuCard} > 
                                 <TouchableOpacity style={styles.imageContainer1}>
-                                    <Image style={styles.image} source={require('../assets/trial.jpg')}/>
+                                    <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.text}>
-                                    <Text style={styles.title}>Certain Text</Text>
-                                    <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
+                                <TouchableOpacity style={styles.text} onPress={()=>navigation.push('addHospital', jsonParsed)}>
+                                    <Text style={styles.title}>Manage Hospitals</Text>
+                                    <Text style={styles.description}>Modify, add, or remove hospitals from the database. Beware of the schema connection between the doctors, hospitals, and availability</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.menuCard} > 
+                            <TouchableOpacity style={styles.imageContainer1}>
+                                <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.text} onPress={()=>navigation.push('addDoctor', jsonParsed)}>
+                                <Text style={styles.title}>Manage Doctors</Text>
+                                <Text style={styles.description}>Modify, add, or remove docctors from the database. Beware of the schema connection between the doctors, hospitals, and availability</Text>
+                            </TouchableOpacity>
+                            </View>
+                            <View style={styles.menuCard} > 
+                                <TouchableOpacity style={styles.imageContainer1}>
+                                    <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.text} onPress={()=>navigation.navigate('addVaccine')}>
+                                    <Text style={styles.title}>Manage vaccine information</Text>
+                                    <Text style={styles.description}>Modify, add, or remove vaccines from the database. Review the possible relations between the vaccines and the other schemas present</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.pad}></View>
                         </ScrollView>
 
                     </View>
-                    {!!identity && <>
                     <TouchableOpacity style={styles.card} > 
                         <View style={styles.imageContainer2}>
-                            <Image style={styles.image} source={require('../assets/trial.jpg')}/>
+                            <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
                         </View>
                         <View style={styles.cardText}>
                             <Text style={styles.title}>This is the Title</Text>
                             <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.card} > 
-                        <View style={styles.imageContainer2}>
-                            <Image style={styles.image} source={require('../assets/trial.jpg')}/>
-                        </View>
-                        <View style={styles.cardText}>
-                            <Text style={styles.title}>This is the Title</Text>
-                            <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.card} > 
-                        <View style={styles.imageContainer2}>
-                            <Image style={styles.image} source={require('../assets/trial.jpg')}/>
-                        </View>
-                        <View style={styles.cardText}>
-                            <Text style={styles.title}>This is the Title</Text>
-                            <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.card} > 
-                        <View style={styles.imageContainer2}>
-                            <Image style={styles.image} source={require('../assets/trial.jpg')}/>
-                        </View>
-                        <View style={styles.cardText}>
-                            <Text style={styles.title}>This is the Title</Text>
-                            <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
-                        </View>
-                    </TouchableOpacity>
-                </>}
                     
                     <View style={styles.pad}></View>
                 </ScrollView>
@@ -323,4 +300,4 @@ const styles = StyleSheet.create({
     
 })
 
-export default Dashboard;
+export default adminPage;

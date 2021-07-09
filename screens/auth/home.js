@@ -3,8 +3,8 @@ import { Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, Button, To
 import {NavigationContainer, StackActions} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import Item from '../components/Item';
-import Navigator from '../routes/welcomeStack'
+import Item from '../../components/Item';
+import Navigator from '../../routes/welcomeStack'
 
 
 function HomeScreen({navigation}){
@@ -49,10 +49,10 @@ function HomeScreen({navigation}){
                     <Text style={styles.continue} onPress={()=>navigation.navigate("app", {screen:'Dashboard', params:{identity:"",passport:""}})}>Continue</Text>
                 </TouchableOpacity>
                 <View style={styles.access} KeyboardAvoidingView={false}>
-                    <TouchableOpacity style={styles.buttonLeft} onPress={()=>navigation.navigate('Register', {from:'home'})}>
+                    <TouchableOpacity style={styles.buttonLeft} onPress={()=>navigation.navigate('Register')}>
                         <Text style = {styles.buText}>Register</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonRight} onPress={()=>navigation.navigate('Sign In', {from:'home'})}>
+                    <TouchableOpacity style={styles.buttonRight} onPress={()=>navigation.navigate('Sign In')}>
                         <Text style = {styles.buText}>Sign In</Text>
                     </TouchableOpacity>
                 </View>

@@ -10,7 +10,7 @@ function splashScreen({navigation}){
     const init = async()=>{
         try{
             const jsonValue = await AsyncStorage.getItem('user');
-            await AsyncStorage.clear()
+            //await AsyncStorage.clear()
             console.log(jsonValue)
             if(jsonValue != null){
                 console.log("User found");
@@ -19,16 +19,16 @@ function splashScreen({navigation}){
                 if(value.auth == "BASIC"){
                     setTimeout(()=>{
                         navigation.replace("app", {screen:"Dashboard", params: value});
-                    }, 1500)
+                    }, 1000)
                 }else if(value.auth == "ADMIN"){
                     setTimeout(()=>{
                         navigation.replace("admin", {screen:"adminPage", params: value});
-                    }, 1500)
+                    }, 1000)
                 }
             }else{
                 setTimeout(()=>{
                     navigation.replace('Welcome')
-                }, 1500)
+                }, 1000)
             }
         }catch(e){
             console.log(e);

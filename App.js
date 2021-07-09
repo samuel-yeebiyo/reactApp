@@ -5,7 +5,7 @@ import {NavigationContainer, StackActions} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import Item from './components/Item';
 import Navigator from './routes/welcomeStack'
-import HomeScreen from './screens/home'
+import HomeScreen from './screens/auth/home'
 
 
 
