@@ -1,10 +1,5 @@
 import React, {useState} from 'react';
 import { Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, Button, TouchableOpacity, View } from 'react-native';
-import {NavigationContainer, StackActions} from '@react-navigation/native'
-import {createStackNavigator} from '@react-navigation/stack'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import Item from '../../components/Item';
-import Navigator from '../../routes/welcomeStack'
 
 
 function HomeScreen({navigation}){

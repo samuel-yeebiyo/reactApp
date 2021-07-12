@@ -1,13 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { Keyboard, KeyboardAvoidingView, StyleSheet, ImageBackground, Text, TextInput, TouchableOpacity, View, BackHandler, Alert} from 'react-native';
-import {CommonActions, NavigationContainer, StackActions} from '@react-navigation/native'
-import {createStackNavigator} from '@react-navigation/stack'
-import Item from '../../components/Item';
-import Navigator from '../../routes/welcomeStack'
 import {useForm, Controller }from 'react-hook-form'
 import Input from '../../components/Input'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { onChange, Value } from 'react-native-reanimated';
 
 const SignIn = ({route, navigation}) => {
 

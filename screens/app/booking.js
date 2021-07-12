@@ -1,11 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Button, TouchableWithoutFeedback,TouchableOpacity, View, BackHandler } from 'react-native';
 import {NavigationContainer, CommonActions, StackActions} from '@react-navigation/native'
-import {createStackNavigator} from '@react-navigation/stack'
-import Item from '../../components/Item';
-import Navigator from '../../routes/welcomeStack'
-import { block } from 'react-native-reanimated';
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Formik, Form, Field, useFormik } from 'formik';
 import PickHospital from '../../components/PickHospital'
 import PickDate from '../../components/DatePicker'

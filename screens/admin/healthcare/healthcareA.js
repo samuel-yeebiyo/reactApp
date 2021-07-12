@@ -1,12 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Button, TouchableWithoutFeedback,TouchableOpacity, View, BackHandler } from 'react-native';
-import {NavigationContainer, CommonActions, StackActions} from '@react-navigation/native'
 import {useForm, Controller }from 'react-hook-form'
-import {createStackNavigator} from '@react-navigation/stack'
 import {useFonts, Poppins_400Regular, Poppins_700Bold} from '@expo-google-fonts/poppins'
 
 import MyForm from '../../../components/Formik'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 

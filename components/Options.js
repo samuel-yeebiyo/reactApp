@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import{
     Text, View, Modal, TouchableOpacity, StyleSheet, Dimensions, ScrollView, TextInput
 } from 'react-native'
-import DateTimePicker from '@react-native-community/datetimepicker'
 import DateTime from './DateTime'
 
 const Options = (props) => {

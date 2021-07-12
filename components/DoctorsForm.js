@@ -2,7 +2,6 @@ import React, {useState}from 'react'
 import { StyleSheet, Button, TextInput, View, Text, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import Select from './Options'
-import {StackActions} from '@react-navigation/native'
 
 
 let values = []

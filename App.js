@@ -1,11 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React from 'react';
 import { Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import {NavigationContainer, StackActions} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
-import Item from './components/Item';
 import Navigator from './routes/welcomeStack'
-import HomeScreen from './screens/auth/home'
 
 
 

@@ -1,10 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Button, TouchableOpacity, View, BackHandler, Alert } from 'react-native';
-import {NavigationContainer, CommonActions, StackActions} from '@react-navigation/native'
-import {createStackNavigator} from '@react-navigation/stack'
-import Item from '../../components/Item';
-import Navigator from '../../routes/welcomeStack'
-import { block } from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 

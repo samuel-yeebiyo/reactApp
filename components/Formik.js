@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Button, TextInput, View, Text, TouchableOpacity } from 'react-native';
 import { Formik, Form, Field, useFormik } from 'formik';
-import { StackActions } from '@react-navigation/routers';
 
 const Forming = () =>{
 

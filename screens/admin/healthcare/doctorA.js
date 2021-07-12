@@ -4,7 +4,6 @@ import { StackActions } from '@react-navigation/routers';
 import {useFonts, Poppins_400Regular, Poppins_700Bold} from '@expo-google-fonts/poppins'
 
 import Formdoc from '../../../components/DoctorsForm'
-import { get } from 'react-native/Libraries/Utilities/PixelRatio';
 
 
 function addingDoctors({route, navigation}){

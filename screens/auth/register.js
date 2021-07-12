@@ -1,11 +1,6 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, Image, View} from 'react-native';
-import {NavigationContainer, StackActions} from '@react-navigation/native'
-import {createStackNavigator} from '@react-navigation/stack'
-import Item from '../../components/Item';
-import Navigator from '../../routes/welcomeStack'
 import {useForm, Controller }from 'react-hook-form'
-import { onChange } from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Input from '../../components/Input'
 import * as ImagePicker from 'expo-image-picker'
