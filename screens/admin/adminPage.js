@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Button, TouchableWithoutFeedback,TouchableOpacity, View, BackHandler } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Button, TouchableOpacity, View, BackHandler, Alert } from 'react-native';
 import {NavigationContainer, CommonActions, StackActions} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import Item from '../../components/Item';
@@ -19,6 +19,24 @@ function adminPage({route, navigation}){
     console.log(typeof(jsonParsed))
     const {identity} = jsonParsed;
     {/* To output from params {JSON.stringify(username)} */}
+
+
+    const outAlert = () =>{
+        Alert.alert(
+            "Sign Out",
+            "Are you sure you wanna sign out?",
+            [
+                {
+                    text:"Cancel",
+                    style:'cancel'
+                },
+                {
+                    text:"Yes, Sign Out",
+                    onPress: ()=>{signOut()}
+                }
+            ]
+        )
+    }
 
 
     const signOut = async() => {
@@ -57,65 +75,50 @@ function adminPage({route, navigation}){
                     <Text style={styles.sub}>Administrator</Text>
                 </View>
 
-                <TouchableOpacity style={styles.pic} onPress={()=> signOut()}/>
+                <TouchableOpacity style={styles.pic} onPress={outAlert}/>
             </View>
         </View>
         <View style={styles.board}>
             <View style={styles.wrapper}>
-                <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+                <ScrollView style={styles.container} showsVerticalScrollIndicator={false} contentContainerStyle={{alignItems:'center'}}>
                     {/*add action on press*/}
-                    <View style={styles.menu}>
-                        <ScrollView style={styles.menuContainer} horizontal showsHorizontalScrollIndicator={false}>
-                            <View style={styles.menuCard} > 
-                                <TouchableOpacity style={styles.imageContainer1}>
-                                    <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.text} onPress={()=>navigation.navigate('addUser', jsonParsed)}>
-                                    <Text style={styles.title}>Manage Users</Text>
-                                    <Text style={styles.description}>Modify, add, or remove users from the database. Alert: data persistence removal will be a problem</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.menuCard} > 
-                                <TouchableOpacity style={styles.imageContainer1}>
-                                    <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.text} onPress={()=>navigation.push('addHospital', jsonParsed)}>
-                                    <Text style={styles.title}>Manage Hospitals</Text>
-                                    <Text style={styles.description}>Modify, add, or remove hospitals from the database. Beware of the schema connection between the doctors, hospitals, and availability</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.menuCard} > 
-                            <TouchableOpacity style={styles.imageContainer1}>
-                                <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.text} onPress={()=>navigation.push('addDoctor', jsonParsed)}>
-                                <Text style={styles.title}>Manage Doctors</Text>
-                                <Text style={styles.description}>Modify, add, or remove docctors from the database. Beware of the schema connection between the doctors, hospitals, and availability</Text>
-                            </TouchableOpacity>
-                            </View>
-                            <View style={styles.menuCard} > 
-                                <TouchableOpacity style={styles.imageContainer1}>
-                                    <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.text} onPress={()=>navigation.navigate('addVaccine')}>
-                                    <Text style={styles.title}>Manage vaccine information</Text>
-                                    <Text style={styles.description}>Modify, add, or remove vaccines from the database. Review the possible relations between the vaccines and the other schemas present</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.pad}></View>
-                        </ScrollView>
-
-                    </View>
-                    <TouchableOpacity style={styles.card} > 
-                        <View style={styles.imageContainer2}>
+                    <View style={styles.menuCard} > 
+                        <TouchableOpacity style={styles.imageContainer1}>
                             <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
-                        </View>
-                        <View style={styles.cardText}>
-                            <Text style={styles.title}>This is the Title</Text>
-                            <Text style={styles.description}>This a long description for the different menu options that will be available for the user to choose from, hopefully the space will be enough</Text>
-                        </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.text} onPress={()=>navigation.navigate('addUser', jsonParsed)}>
+                            <Text style={styles.title}>Registered Users</Text>
+                            <Text style={styles.description}>Get an overview of the users registered on this application</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.menuCard} > 
+                        <TouchableOpacity style={styles.imageContainer1}>
+                            <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.text} onPress={()=>navigation.push('addHospital', jsonParsed)}>
+                            <Text style={styles.title}>Manage Hospitals</Text>
+                            <Text style={styles.description}>Modify, add, or remove hospitals from the database. Beware of the schema connection between the doctors, hospitals, and availability</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.menuCard} > 
+                    <TouchableOpacity style={styles.imageContainer1}>
+                        <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
                     </TouchableOpacity>
-                    
+                    <TouchableOpacity style={styles.text} onPress={()=>navigation.push('addDoctor', jsonParsed)}>
+                        <Text style={styles.title}>Manage Doctors</Text>
+                        <Text style={styles.description}>Modify, add, or remove docctors from the database. Beware of the schema connection between the doctors, hospitals, and availability</Text>
+                    </TouchableOpacity>
+                    </View>
+                    <View style={styles.menuCard} > 
+                        <TouchableOpacity style={styles.imageContainer1}>
+                            <Image style={styles.image} source={require('../../assets/trial.jpg')}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.text} onPress={()=>navigation.navigate('addVaccine')}>
+                            <Text style={styles.title}>Manage Vaccine information</Text>
+                            <Text style={styles.description}>Modify, add, or remove vaccines from the database. Review the possible relations between the vaccines and the other schemas present</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.pad}></View>
                     <View style={styles.pad}></View>
                 </ScrollView>
             </View>
@@ -138,7 +141,7 @@ const styles = StyleSheet.create({
         width:'100%',
         height:'40%',
         paddingHorizontal:'7%',
-        backgroundColor:'#A74B4B',
+        backgroundColor:'#21264b',
         borderBottomLeftRadius:10,
         borderBottomRightRadius:10,
     },
@@ -214,7 +217,7 @@ const styles = StyleSheet.create({
     menu:{
         backgroundColor:'#fff',
         width:'100%',
-        height:300,
+        height:'100%',
         position:'relative',
         //right:10,
         marginBottom:25,
@@ -225,11 +228,11 @@ const styles = StyleSheet.create({
         width:'100%'  
     },
     menuCard:{
-        position:'relative',
-        width:260,
+        width:'90%',
+        height:300,
         backgroundColor:'#fff',
         borderRadius:35,
-        marginLeft:15,
+        marginBottom:15
     },
     imageContainer1:{
         width:'100%',

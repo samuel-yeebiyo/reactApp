@@ -2,7 +2,7 @@ import React, {useState}from 'react'
 import { StyleSheet, Button, TextInput, View, Text, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import Select from './Options'
-
+import {StackActions} from '@react-navigation/native'
 
 
 let values = []
@@ -68,7 +68,7 @@ function getData(val){
 
 
 
-const Container = () =>{
+const Container = (props) =>{
 
     const [pressed, setPressed] = useState(0);
     const index = pressed;    
@@ -84,6 +84,7 @@ const Container = () =>{
                 hospital:''
             }}
             onSubmit={async (form) => {
+                props.nav()
                 const rawResponse = await fetch('http://192.168.10.159:3000/healthcare/doctor/add',{
                     method:'POST',
                     headers:{
@@ -95,15 +96,16 @@ const Container = () =>{
                         access:values
                     })
                 })
-                values=[]
+                values=[]                
             }}>
 
             {({ handleChange, handleSubmit, values }) => (
-                <View>
+                <View style={s.form}>
                     <TextInput
                         onChangeText={handleChange('name')}
                         placeholder="Doctor Name"
                         value={values.name}
+                        style={s.name}
                     />
                     {[...Array(index)].map(()=>{
                         return(
@@ -111,13 +113,13 @@ const Container = () =>{
                         )
                     })}
                     
-                    <TouchableOpacity onPress={()=>{
+                    <TouchableOpacity style={s.add} onPress={()=>{
                         setPressed(pressed+1)
                     }}>
                         <Text> +    Add Hospital</Text>
                     </TouchableOpacity>
                     
-                    <TouchableOpacity onPress={handleSubmit} title="Submit">
+                    <TouchableOpacity style={s.submit} onPress={handleSubmit} title="Submit">
                         <Text>Submit</Text>
                     </TouchableOpacity>
                 </View>
@@ -129,5 +131,45 @@ const Container = () =>{
 
 
 }
+
+const s = StyleSheet.create({
+    form:{
+        width:380,
+        paddingTop:20
+    },
+    name:{
+        width:'80%',
+        height:35,
+        marginLeft:20,
+        padding:10,
+        borderWidth:1,
+        borderStyle:'solid',
+        borderColor:"#000",
+        borderRadius:5
+    },
+    add:{
+        marginLeft:20,
+        marginTop:15,
+        borderRadius:20,
+        borderWidth:1,
+        borderColor:'#000',
+        borderStyle:'solid',
+        width:110,
+        height:30,
+        padding:6
+    },
+    submit:{
+        marginLeft:130,
+        marginTop:10,
+        borderWidth:1,
+        borderColor:'#000',
+        borderStyle:'solid',
+        borderRadius:5,
+        width:80,
+        paddingLeft:18,
+        paddingTop:5,
+        height:30
+    }
+})
 
 export default Container;

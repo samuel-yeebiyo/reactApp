@@ -135,7 +135,7 @@ const Options = (props) => {
 
             <View style={s.list}>
                 {visible &&
-                    <TouchableOpacity onPress={()=>{
+                    <TouchableOpacity style={s.item} onPress={()=>{
                         setChoiceH({})
                         hideV()
                     }}>
@@ -143,7 +143,7 @@ const Options = (props) => {
                     </TouchableOpacity>
                 }{visible &&
                     hospitalList.map((item) =>(
-                        <TouchableOpacity onPress={()=>{
+                        <TouchableOpacity style={s.item} onPress={()=>{
                             setChoiceH(item)
                             hideV()
                             setValue(prev =>{
@@ -168,37 +168,18 @@ const Options = (props) => {
                 )
             })}
 
-            <TouchableOpacity onPress={()=>{
+            <TouchableOpacity style={s.time} onPress={()=>{
                 setPressed(pressed+1)
             }}>
-                <Text> +   Add more time</Text>
+                <Text> +   Add Time</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={()=>{
+            <TouchableOpacity style={s.set}onPress={()=>{
                 showDone()
             }}>
                 <Text>Set Hospital</Text>
             </TouchableOpacity>
-            {done && arr ? arr.map((item)=>{
-                <>
-                    <Text>Day: {item.day}</Text>
-                    <Text>From: {item.from}</Text>
-                    <Text>To: {item.to}</Text>
-                </>
-                
-            })
-                 :
-                <Text>Empty</Text>
-            }
 
-            
-
-
-
-
-
-
-            
         </View>
         
         
@@ -207,18 +188,47 @@ const Options = (props) => {
 
 const s = StyleSheet.create({
     init:{
-        width:'30%',
-        borderWidth:2,
+        width:'80%',
+        height:38,
+        marginLeft:20,
+        padding:8,
+        borderWidth:1,
         borderColor:'#000',
         borderStyle:'solid',
+        borderRadius:5,
+        marginTop:20
     },
     list:{
-        width:150,
-        backgroundColor:'#EEE',
-        elevation:3,
-        shadowColor:"#000",
-        padding:5
-    }
+        width:'79%',
+        backgroundColor:'#FFF',
+        marginLeft:22,
+        padding:8
+    },
+    item:{
+        height:27
+    },
+    time:{
+        marginLeft:20,
+        marginTop:15,
+        borderRadius:20,
+        borderWidth:1,
+        borderColor:'#000',
+        borderStyle:'solid',
+        width:110,
+        height:30,
+        padding:6
+    },
+    set:{
+        marginLeft:80,
+        marginTop:10,
+        borderWidth:1,
+        borderColor:'#000',
+        borderStyle:'solid',
+        borderRadius:5,
+        width:80,
+        padding:5,
+        height:30
+    },
 })
 
 export default Options

@@ -1,11 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Button, TouchableWithoutFeedback,TouchableOpacity, View, BackHandler } from 'react-native';
 import { StackActions } from '@react-navigation/routers';
+import {useFonts, Poppins_400Regular, Poppins_700Bold} from '@expo-google-fonts/poppins'
 
 import Formdoc from '../../../components/DoctorsForm'
+import { get } from 'react-native/Libraries/Utilities/PixelRatio';
 
 
 function addingDoctors({route, navigation}){
+    let [fonts] = useFonts({
+        Poppins_400Regular,
+        Poppins_700Bold,
+    })
 
     //Displays the admin ID
     let jsonParsed;
@@ -19,6 +25,9 @@ function addingDoctors({route, navigation}){
     {/* To output from params {JSON.stringify(username)} */}
 
 
+    function get(){
+        navigation.dispatch(StackActions.pop(1))
+    }
 
     
     //prevent the back button from going to home page
@@ -35,212 +44,80 @@ function addingDoctors({route, navigation}){
     
     return (
         <View style={styles.main}>
-        <View style={styles.dash}>
-            <View style={styles.top}>
-                <View>
-                    <Text style={styles.welcome}>Welcome {JSON.parse(JSON.stringify(identity))}!</Text>
-                    <Text style={styles.sub}>Administrator</Text>
-                </View>
-
-                <TouchableOpacity style={styles.pic} onPress={()=> signOut()}/>
+            <View style={styles.container}>
+            <View style={styles.topSide}>
+            <TouchableOpacity onPress={()=>navigation.dispatch(StackActions.pop(1))}>
+                <Image style={styles.back} source={require('../../../assets/back-arrow.png')}/>
+                </TouchableOpacity>
+                <Text style={styles.mainTitle}>Add Doctor</Text>
             </View>
-        </View>
-        <View style={styles.board}>
-            <View style={styles.wrapper}>
-                <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                    {/*add action on press*/}
-                    <View style={styles.menu}>
-                        <View style={styles.addH}>
-                            <View style={styles.form}>
-                                <Formdoc/>
-                            </View>
-                        </View>
-
-                    </View>
                     
-                            
+                    <View style={styles.divider}>
+                        <Text></Text>
+                </View>   
+                <ScrollView style={styles.infoContainer} showsVerticalScrollIndicator={false}>
+                    {/*add action on press*/}
+                    <Formdoc nav={get}/>
                     <View style={styles.pad}></View>
                 </ScrollView>
             </View>
         </View>
-  </View>
     );
 }
 
 const styles = StyleSheet.create({
-    //Main
     main:{
         width:'100%',
         height:'100%',
-        backgroundColor:'#fff',
-        alignItems:'center',
-    },
-
-    //Bottom side
-    dash:{
-        width:'100%',
-        height:'40%',
-        paddingHorizontal:'7%',
-        backgroundColor:'#A74B4B',
-        borderBottomLeftRadius:10,
-        borderBottomRightRadius:10,
-    },
-    top:{
-        marginTop:55,
-        flexDirection:'row',
-        justifyContent:'space-between',
+        backgroundColor:'#CCC',
+        paddingTop:40,
         alignItems:'center'
     },
-    welcome:{
-        color:'#fff',
-        fontSize:25,
-        fontWeight:'bold'
-    },
-    sub:{
-        color:'#F6F3E9',
-        fontSize:14
-    },
-    pic:{
-        borderWidth:2,
-        borderColor:'#FFF',
-        borderStyle:'solid',
-        width:40,
-        height:40,
-        borderRadius:60
-    },
-
-    //Main board containing all the cards
-    board:{
-        height:'84%',
-        backgroundColor:'#FFF',
-        width:'95%',
-        borderTopLeftRadius:35,
-        borderTopRightRadius:35,
-        zIndex:2,
-        position:'relative',
-        bottom:'24%',
-        justifyContent:'center',
-        alignItems:'center',
-    },
-
-    //top containers
-    wrapper:{
-        borderTopLeftRadius:35, 
-        borderTopRightRadius:35,
-        width:'100%',
-        height:'100%', 
-        overflow:'hidden',
-        justifyContent:'center',
-        alignItems:'center',
-    },
     container:{
-        width:'100%',
-        paddingHorizontal:'0%',
         height:'100%',
-        paddingTop:20,
-        flexDirection:'column',
-        borderTopLeftRadius:60,
-        borderTopRightRadius:60,
-        overflow:'visible',
+        width:'95%',
+        alignItems:'center'
     },
-
-    //vaccine status
-    status:{
+    mainTitle:{
+        fontFamily:'Poppins_700Bold',
+        fontStyle:'normal',
+        fontSize:45        
+    },
+    back:{
+        height:35,
+        width:40,
+        marginRight:20,
+        marginLeft:10
+    },
+    topSide:{
+        height:'15%',
         flexDirection:'row',
-        justifyContent:'space-between',
-        paddingHorizontal:10,
-        marginBottom:20,
-        marginHorizontal:'5%',
+        alignItems:'center',
+        justifyContent:'center',
+        alignSelf:'flex-start'
     },
-
-    //horizontal scroll cards
-    menu:{
-        backgroundColor:'#fff',
+    divider:{
+        width:'90%',
+        height:4,
+        borderRadius:10,
+        backgroundColor:'#27eda0'
+    },
+    infoContainer:{
+        height:'0%',
         width:'100%',
-        height:800,
-        position:'relative',
-        //right:10,
-        marginBottom:25,
-        borderRadius:40 ,
+        backgroundColor:"#FFF"
     },
-    menuContainer:{
-        height:'100%',
-        width:'100%'  
+    infoCard:{
+        height:200,
+        width:'90%',
+        backgroundColor:"#CCC",
+        alignSelf:'center',
+        marginTop:20
     },
-    menuCard:{
-        position:'relative',
-        width:260,
-        backgroundColor:'#fff',
-        borderRadius:35,
-        marginLeft:15,
-    },
-    imageContainer1:{
-        width:'100%',
-        height:'85%',
-        overflow:'hidden',
-        borderRadius:35,
-    },
-    text:{
-        backgroundColor:"#FFF",
-        height:'30%',
-        width:'99%',
-        position:'absolute',
-        bottom:10,
-        left:10,
-        borderRadius:20,
-        shadowColor:"#000",
-        shadowOffset:{width:0, height:4},
-        shadowOpacity:0,
-        shadowRadius:4,
-        elevation:4
-    },
-    
-    description:{
-        marginHorizontal:12,
-        fontSize:11
-    },
-
-    //vertical scroll cards
-    card:{
-        backgroundColor:'#F6F3E9',
-        borderRadius:35,
-        height:150,
-        marginBottom:25,
-        flexDirection:'row',
-        overflow:'hidden',
-        marginHorizontal:'5%',
-    },
-    imageContainer2:{
-        width:'40%',
-        height:'100%',
-        overflow:'hidden',
-    },
-    cardText:{
-        width:'60%'
-    },
-    
-    //main image and text styling
-    image:{
-        backgroundColor:"#000",
-        height:'100%',
-        width:'100%',
-    },
-    title:{
-        fontWeight:'bold',
-        marginHorizontal:12,
-        marginTop:10,
-        marginBottom:5,
-        fontSize:17
-    },
-
-
-    
     pad:{
-        height:15,
-        width:15
+        height:20,
+        width:2
     }
     
-    
 })
-
 export default addingDoctors;

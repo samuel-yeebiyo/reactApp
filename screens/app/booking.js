@@ -10,6 +10,7 @@ import { Formik, Form, Field, useFormik } from 'formik';
 import PickHospital from '../../components/PickHospital'
 import PickDate from '../../components/DatePicker'
 import VaccinePicker from '../../components/PickVaccine'
+import {useFonts, Poppins_400Regular, Poppins_700Bold} from '@expo-google-fonts/poppins'
 
 
 
@@ -97,24 +98,26 @@ function Booking({route, navigation}){
     }
 
 
-
     return (
       <View style={styles.main}>
-        <View style={styles.dash}>
-            <View style={styles.top}>
-                <View>
-                    <Text style={styles.welcome}>Welcome {JSON.parse(JSON.stringify(identity))}!</Text>
-                    <Text style={styles.sub}>{JSON.parse(JSON.stringify(passport))}</Text>
-                </View>
-
-                <TouchableOpacity style={styles.pic}/>
-            </View>
-        </View>
         <View style={styles.board}>
+
+        <View style={styles.topSide}>
+        <TouchableOpacity onPress={()=>navigation.dispatch(StackActions.pop(1))}>
+            <Image style={styles.back} source={require('../../assets/back-arrow.png')}/>
+            </TouchableOpacity>
+            <View style={styles.titles}><Text style={styles.mainTitle}>Book An</Text>
+            <Text style={styles.mainTitle}>Appointment</Text></View>
+        </View>
+
+            <View style={styles.divider}>
+                <Text ></Text>
+            </View>
+
+
             <View style={styles.wrapper}>
-                <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+                <ScrollView style={styles.container} showsVerticalScrollIndicator={false} contentContainerStyle={{alignItems:'center'}, {justifyContent:'center'}}>
                     {/*add action on press*/}
-                
                     <Formik
                         initialValues={{
                             name: '',
@@ -135,41 +138,45 @@ function Booking({route, navigation}){
                                     vaccine:vaccine,
                                 })
                             })
+                            navigation.replace("Dashboard")
                         }}>
 
                         {({ handleChange, handleSubmit, values }) => (
                             <View style={styles.form}>
-                                <PickHospital get={getHospital}/>
+                                <PickHospital style={styles.ph}get={getHospital}/>
+                                <View style={styles.pad}></View>
                                 <PickDate get={getData}/>
+                                <View style={styles.pad}></View>
                                 <VaccinePicker get={getVaccine}/>
-                                
-                                <TouchableOpacity onPress={() => {
-                                    fetching()
-                                    showing(true)
-                                }}>
-                                    <Text>Find Doctors</Text>
-                                </TouchableOpacity>
+                                <View style={styles.pad}></View>
 
-                                <View>
-                                {show && 
-                                    doctor.map((item)=>(
-                                        <TouchableOpacity onPress={()=>{
-                                            choose(item)
-                                            //change styling
-                                        }}>
-                                            <Text>{item.name}</Text>
-                                        </TouchableOpacity>
-                                    ))
-                                }
+                                <View style={styles.rest}>
+                                    <TouchableOpacity style={styles.find} onPress={() => {
+                                        fetching()
+                                        showing(true)
+                                    }}>
+                                        <Text>Find Doctors</Text>
+                                    </TouchableOpacity>
+
+                                    <View>
+                                    {show && 
+                                        doctor.map((item)=>(
+                                            <TouchableOpacity style={choice.name==item.name ? styles.foc :  styles.list}onPress={()=>{
+                                                choose(item)
+                                            }}>
+                                                <Text>Doctor: {item.name}</Text>
+                                            </TouchableOpacity>
+                                        ))
+                                    }
+                                    </View>
+                                    
+                                    <TouchableOpacity style={styles.submit} onPress={handleSubmit} title="Submit">
+                                        <Text>Submit</Text>
+                                    </TouchableOpacity>
                                 </View>
-                                
-                                <TouchableOpacity onPress={handleSubmit} title="Submit">
-                                    <Text>Submit</Text>
-                                </TouchableOpacity>
                             </View>
                         )}
-                    </Formik>
-                    
+                    </Formik>                    
                     <View style={styles.pad}></View>
                 </ScrollView>
             </View>
@@ -179,71 +186,50 @@ function Booking({route, navigation}){
 }
 
 const styles = StyleSheet.create({
-    //form
-    form:{
-        position:'relative',
-        left:120
-    },
-
-    view:{
-        height:100,
-        width:300,
-        backgroundColor:'#EEE'
-    },
-
     //Main
     main:{
         width:'100%',
         height:'100%',
-        backgroundColor:'#fff',
+        backgroundColor:'#FFF',
         alignItems:'center',
-    },
-
-    //Bottom side
-    dash:{
-        width:'100%',
-        height:'40%',
-        paddingHorizontal:'7%',
-        backgroundColor:'#A74B4B',
-        borderBottomLeftRadius:10,
-        borderBottomRightRadius:10,
-    },
-    top:{
-        marginTop:55,
-        flexDirection:'row',
-        justifyContent:'space-between',
-        alignItems:'center'
-    },
-    welcome:{
-        color:'#fff',
-        fontSize:25,
-        fontWeight:'bold'
-    },
-    sub:{
-        color:'#F6F3E9',
-        fontSize:14
-    },
-    pic:{
-        borderWidth:2,
-        borderColor:'#FFF',
-        borderStyle:'solid',
-        width:40,
-        height:40,
-        borderRadius:60
     },
 
     //Main board containing all the cards
     board:{
-        height:'84%',
-        backgroundColor:'#FFF',
+        height:'100%',
         width:'95%',
-        borderTopLeftRadius:35,
-        borderTopRightRadius:35,
-        zIndex:2,
-        position:'relative',
-        bottom:'24%',
         justifyContent:'center',
         alignItems:'center',
+        paddingTop:50
+    },
+    mainTitle:{
+        fontFamily:'Poppins_700Bold',
+        fontStyle:'normal',
+        fontSize:32,
+        marginBottom:-10,
+        color:"#000"        
+    },
+    titles:{
+        flexDirection:'column'
+    },
+    back:{
+        height:35,
+        width:40,
+        marginRight:20,
+        marginLeft:10
+    },
+    topSide:{
+        height:'15%',
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center',
+        alignSelf:'flex-start'
+    },
+    divider:{
+        width:'90%',
+        height:4,
+        borderRadius:10,
+        backgroundColor:'#27eda0'
     },
 
     //top containers
@@ -251,21 +237,80 @@ const styles = StyleSheet.create({
         borderTopLeftRadius:35, 
         borderTopRightRadius:35,
         width:'100%',
-        height:'100%', 
+        height:'90%', 
         overflow:'hidden',
         justifyContent:'center',
         alignItems:'center',
+        position:'relative'
     },
     container:{
         width:'100%',
         paddingHorizontal:'0%',
-        height:'100%',
         paddingTop:20,
         flexDirection:'column',
         borderTopLeftRadius:60,
         borderTopRightRadius:60,
         overflow:'visible',
     },
+    wrapForm:{
+        width:'100%',
+        alignItems:'center',
+        paddingTop:20,
+        borderColor:'#000',
+        borderStyle:'solid',
+        borderWidth:1,
+    },
+    form:{
+        width:'100%',
+        height:'95%',
+    },
+    pad:{
+        height:10,
+        width:10
+    },
+    rest:{
+        alignItems:'center',
+        height:'100%',
+    },
+    find:{
+        width:120,
+        alignItems:'center',
+        height:35,
+        backgroundColor:'#CCC',
+        justifyContent:'center'
+
+    },
+    list:{
+        width:240,
+        marginTop:20,
+        height:40,
+        padding:10,
+        borderRadius:5,
+        borderColor:'#000',
+        borderStyle:'solid',
+        borderWidth:1
+    },
+    foc:{
+        width:240,
+        marginTop:20,
+        height:40,
+        padding:10,
+        borderRadius:5,
+        borderColor:'#27eda0',
+        borderStyle:'solid',
+        borderWidth:1
+
+    },
+    submit:{
+        marginTop:30,
+        width:120,
+        height:35,
+        borderRadius:8,
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:'#CCC'
+    },
+
 
     //vaccine status
     status:{

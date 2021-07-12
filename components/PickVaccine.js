@@ -65,9 +65,9 @@ const Options = (props) => {
             }
             </TouchableOpacity>
 
-            <View style={s.list}>
+            <View style={visible && s.list}>
                 {visible &&
-                    <TouchableOpacity onPress={()=>{
+                    <TouchableOpacity style={s.li} onPress={()=>{
                         setChoiceH({})
                         hideV()
                     }}>
@@ -75,7 +75,7 @@ const Options = (props) => {
                     </TouchableOpacity>
                 }{visible &&
                     vaccineList.map((item) =>(
-                        <TouchableOpacity onPress={()=>{
+                        <TouchableOpacity style={s.li} onPress={()=>{
                             // setValue(item)
                             setChoiceH(item)
                             hideV()
@@ -95,17 +95,28 @@ const Options = (props) => {
 
 const s = StyleSheet.create({
     init:{
-        width:'30%',
-        borderWidth:2,
-        borderColor:'#000',
+        width:'75%',
+        borderColor:"#AAA",
+        borderWidth:1,
         borderStyle:'solid',
+        padding:10,
+        alignSelf:'center',
+        height:40,
+        borderRadius:8,
+        marginBottom:5
     },
     list:{
-        width:150,
-        backgroundColor:'#EEE',
-        elevation:3,
+        width:'74%',
+        padding:5,
+        alignSelf:'center',
         shadowColor:"#000",
-        padding:5
+        elevation:1,
+        shadowRadius:40,
+        marginBottom:20
+    },
+    li:{
+        height:30,
+        padding:10,
     }
 })
 

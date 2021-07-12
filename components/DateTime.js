@@ -124,7 +124,7 @@ const DateTime = (props) => {
                 <View style={s.list}>
                     {showD && 
                         dates.map((item) =>(
-                            <TouchableOpacity onPress={()=>{
+                            <TouchableOpacity style={s.item} onPress={()=>{
                                 setDate(item)
                                 setShowD(false)
                                 setGathered(prev =>{
@@ -189,18 +189,11 @@ const DateTime = (props) => {
                 }
             </View>
 
-            <TouchableOpacity onPress={()=>{
+            <TouchableOpacity style={s.set} onPress={()=>{
                 showDone()
             }}>
                 <Text>Set Time</Text>
-            </TouchableOpacity>
-            {done && <>
-                <Text> Day: {gathered.day}</Text>
-                <Text> From: {gathered.from}</Text>
-                <Text> To: {gathered.to}</Text>
-
-            </>}
-        
+            </TouchableOpacity>        
         </View>
     )
 
@@ -208,18 +201,37 @@ const DateTime = (props) => {
 
 const s = StyleSheet.create({
     init:{
-        width:'30%',
-        borderWidth:2,
+        width:'80%',
+        height:35,
+        marginLeft:20,
+        padding:10,
+        borderWidth:1,
         borderColor:'#000',
         borderStyle:'solid',
+        borderRadius:5,
+        marginBottom:5
     },
     list:{
-        width:150,
-        backgroundColor:'#EEE',
-        elevation:3,
-        shadowColor:"#000",
-        padding:5
-    }
+        width:'79%',
+        backgroundColor:'#FFF',
+        marginLeft:22,
+        padding:8
+    },
+    item:{
+        height:27
+    },
+    set:{
+        marginLeft:80,
+        marginTop:10,
+        borderWidth:1,
+        borderColor:'#000',
+        borderStyle:'solid',
+        borderRadius:5,
+        width:60,
+        padding:5,
+        height:30,
+        marginBottom:10
+    },
 })
 
 export default DateTime

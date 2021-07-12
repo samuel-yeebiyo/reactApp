@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, Image, View} from 'react-native';
 import {NavigationContainer, StackActions} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import Item from '../../components/Item';
@@ -8,13 +8,15 @@ import {useForm, Controller }from 'react-hook-form'
 import { onChange } from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Input from '../../components/Input'
-
+import * as ImagePicker from 'expo-image-picker'
 
 
 const Register = ({navigation}) => {
 
     const[password, setPassword]= useState();
     const[user, setUser]=useState({})
+    const[photo, setPhoto]=useState()
+    const[show, setShow] =useState(false)
 
 
     const {control, handleSubmit, formState: {errors}} = useForm();
@@ -23,39 +25,90 @@ const Register = ({navigation}) => {
         console.log("Passed Register")
     }
     constructor()
-    
+
+    const handlePhoto = async()=>{
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes:ImagePicker.MediaTypeOptions.Images,
+            allowsEditing:true,
+            aspect:[4,3],
+            quality:1,
+            base64:true
+        })
+
+        console.log("Result  ",result);
+
+        if(!result.cancelled){
+            setPhoto(result)
+        }
+        setShow(true)
+    }
     
     const onSubmit = async (data) => {
+        let permission;
+        let jsonString
         console.log(data);
-        const rawResponse = await fetch('http://192.168.10.159:3000/users/', {
-            method:'POST',
-            headers:{
-                'Accept':'application/json',
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify({
-                name:data.username,
-                passport:data.passnumber,
-                password:data.password
+
+        try{
+            //uploading the image
+            await fetch('http://192.168.10.159:3000/upload/',{
+                method:'POST',
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    imgsource:photo.base64,
+                    id:data.passnumber
+                })
+            }).then(response => response.json())
+            .then((response)=>{
+                console.log('upload success', response);
+            }).catch((error)=>{
+                console.log('upload error', error);                
             })
-        }).then(response => response.json())
-        .then(final=> {
-            console.log("returned")
-            const permission = final.allow;
-            const userReturned = final.payload;
 
-            console.log("Permission:", permission);
-            
-            const jsonString = JSON.stringify(userReturned)
-            console.log("Returned User:",jsonString)
+            await fetch('http://192.168.10.159:3000/users/', {
+                method:'POST',
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify({
+                    name:data.username,
+                    passport:data.passnumber,
+                    password:data.password,
+                })
+            }).then(response => response.json())
+            .then(final=> {
+                console.log("returned")
+                permission = final.allow;
+                const userReturned = final.payload;
 
-            persist(jsonString);
+                console.log("Permission:", permission);
+                
+                jsonString = JSON.stringify(userReturned)
+                console.log("Returned User:",jsonString)
 
-            if(permission == true){
-                console.log("Allowed")
-                navigation.navigate("app", {screen:'Dashboard', params: jsonString});
-            }
-        })        
+                persist(jsonString);
+
+                if(permission == true){
+                    console.log("Allowed")
+                    navigation.replace("loading")
+                }
+            })
+
+
+        }catch(e){}
+
+
+        // try{
+           
+        // }catch(e){}
+
+        
+
+        
+
     };
 
     const persist = async(data) =>{
@@ -70,11 +123,27 @@ const Register = ({navigation}) => {
     var PN_REGEX = /^(?!^0+$)[a-zA-Z0-9]{6,9}$/g;
     var PASS_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/g;
     var USER_REGEX = /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/g;
+
+
+
     return (
         <View style={styles.main}>
         <View style={styles.hero}>
             <Text style={styles.bigText}>COVID-19 Vaccination Information System</Text>
             <View style={styles.form}>
+
+                <View>
+                {show &&
+                    <Image
+                        source={{uri:photo.uri}}
+                        style={{width:100, height:100}}
+                    />
+                }
+                    <TouchableOpacity style={styles.butt} onPress={handlePhoto}>
+                        <Text style={styles.buText}>Choose Image</Text>
+                    </TouchableOpacity>
+                </View>
+
                 <Controller 
                     control={control}
                     render = {({field:{onChange, value}})=>(
@@ -173,10 +242,17 @@ const Register = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
+    butt:{
+        borderWidth:1,
+        borderStyle:'solid',
+        borderColor:"#FFF",
+        width:90,
+        height:20
+    },
     main:{
         width:'100%',
         height:'100%',
-        backgroundColor:'#F95A64',
+        backgroundColor:'#21264b',
         paddingTop:50,
         paddingLeft:20,
         paddingRight:20,
@@ -247,7 +323,8 @@ const styles = StyleSheet.create({
     },
     buText:{
         textAlign:'center',
-        color:'#FFF'
+        color:'#FFF',
+        fontWeight:'bold'
         
     }
 })

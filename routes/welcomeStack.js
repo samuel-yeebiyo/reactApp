@@ -17,6 +17,8 @@ import Register from '../screens/auth/register'
 //app
 import Dashboard from '../screens/app/dashboard'
 import Booking from '../screens/app/booking'
+import VacInfo from '../screens/app/infoVac'
+import HosInfo from '../screens/app/infoHos'
 
 //admin
 import AdminPage from '../screens/admin/adminPage'
@@ -57,6 +59,8 @@ const appScreen = () =>{
         <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name="Dashboard" initialParams={value} component={Dashboard}/>
             <Stack.Screen name="Booking" component={Booking}/>
+            <Stack.Screen name="vacInfo" component={VacInfo}/>
+            <Stack.Screen name="hosInfo" component={HosInfo}/>
             <Stack.Screen name="auth" component={authScreen}/>
         </Stack.Navigator>
     )

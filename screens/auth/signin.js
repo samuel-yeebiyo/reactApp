@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     main:{
         width:'100%',
         height:'100%',
-        backgroundColor:'#A74B4B',
+        backgroundColor:'#01a1f8',
         paddingTop:50,
         paddingLeft:20,
         paddingRight:20,

@@ -9,34 +9,6 @@ import Navigator from '../../routes/welcomeStack'
 
 function HomeScreen({navigation}){
 
-    const [state, setState] = useState({})
-
-    // const init = async() =>{
-    //     console.log("contructor called")
-    //     try{
-    //         const jsonValue = await AsyncStorage.getItem('user');
-    //         //await AsyncStorage.clear()
-    //         console.log(jsonValue)
-    //         if(jsonValue != null){
-    //             console.log("User found");
-    //             //setState(JSON.parse(jsonValue));
-    //             console.log("Passing to dashboard: ", jsonValue)
-    //             navigation.navigate('Dashboard', jsonValue);
-    //         }else{
-    //             console.log("Not logged in!");
-    //         }
-    //     }catch(e){
-    //         console.log(e);
-    //     }
-    // }
-    // init();
-
-
-    const constructor = () =>{
-        console.log("Passed Home")
-    }
-    constructor()
-
     return (
         <View style={styles.main}>
             <View style={styles.hero}>
@@ -65,7 +37,7 @@ const styles = StyleSheet.create({
     main:{
         width:'100%',
         height:'100%',
-        backgroundColor:'#F6f3e9',
+        backgroundColor:'#21264b',
         paddingTop:50,
         paddingLeft:20,
         paddingRight:20,
@@ -81,13 +53,13 @@ const styles = StyleSheet.create({
         fontSize:30,
         fontWeight:'bold',
         textAlign:'center',
-        color:"#000"
+        color:"#FFF"
     },
     info:{
         marginTop:25,
         fontSize:15,
         textAlign:'center',
-        color:"#000"
+        color:"#FFF"
 
     },
     buttons:{
@@ -98,7 +70,7 @@ const styles = StyleSheet.create({
     continue:{
         textAlign:'center',
         height:20,
-        color:"#000",
+        color:"#FFF",
         textDecorationLine:'underline',
         fontSize:18,
     },
@@ -113,7 +85,7 @@ const styles = StyleSheet.create({
     buttonLeft:{
         height:60,
         width:120,
-        backgroundColor:'#f95a64',
+        backgroundColor:'#01a1f8',
         borderRadius:25,
         justifyContent:'center',
         alignItems:'flex-end',
@@ -125,7 +97,7 @@ const styles = StyleSheet.create({
     buttonRight:{
         height:60,
         width:150,
-        backgroundColor:'#a74b4b',
+        backgroundColor:'#27eda0',
         borderRadius:25,
         position:'relative',
         right:30,
