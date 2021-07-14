@@ -44,18 +44,15 @@ function addingDoctors({route, navigation}){
     return (
         <View style={styles.main}>
             <View style={styles.container}>
-            <View style={styles.topSide}>
-            <TouchableOpacity onPress={()=>navigation.dispatch(StackActions.pop(1))}>
-                <Image style={styles.back} source={require('../../../assets/back-arrow.png')}/>
-                </TouchableOpacity>
-                <Text style={styles.mainTitle}>Add Doctor</Text>
-            </View>
+                <View style={styles.topSide}>
+                    <TouchableOpacity onPress={()=>navigation.dispatch(StackActions.pop(1))}>
+                        <Image style={styles.back} source={require('../../../assets/back-arrow.png')}/>
+                    </TouchableOpacity>
+                    <Text style={styles.mainTitle}>Add Doctor</Text>
+                </View>
                     
-                    <View style={styles.divider}>
-                        <Text></Text>
-                </View>   
+                    <View style={styles.divider}></View>   
                 <ScrollView style={styles.infoContainer} showsVerticalScrollIndicator={false}>
-                    {/*add action on press*/}
                     <Formdoc nav={get}/>
                     <View style={styles.pad}></View>
                 </ScrollView>

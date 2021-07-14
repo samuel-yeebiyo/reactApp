@@ -3,14 +3,11 @@ import { StyleSheet, Image, Text, View, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 function splashScreen({navigation}){
-    console.log("Appread First")
-
+    console.log("Appeared First")
     let value;
-
     const init = async()=>{
         try{
             const jsonValue = await AsyncStorage.getItem('user');
-            //await AsyncStorage.clear()
             console.log(jsonValue)
             if(jsonValue != null){
                 console.log("User found");

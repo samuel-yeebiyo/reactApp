@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Button, TouchableWithoutFeedback,TouchableOpacity, View, BackHandler } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Button, TouchableWithoutFeedback,TouchableOpacity, View, BackHandler, Alert } from 'react-native';
 import {useForm, Controller }from 'react-hook-form'
 import {useFonts, Poppins_400Regular, Poppins_700Bold} from '@expo-google-fonts/poppins'
-
+import { StackActions } from '@react-navigation/routers';
 import MyForm from '../../../components/Formik'
 
 
@@ -38,36 +38,18 @@ function addingHospital({route, navigation}){
     }, []);
 
 
-
-
-
-    //state handling
-    let index = 0;
-    let data = [
-        {key:index++, section:true, label:'Hospital 1'},
-        {key:index++, label:'Hospital 2'},
-        {key:index++, label:'Hospital 3'}
-    ]
-
-    //FORM HANDLING
-    const {control, handleSubmit, formState:{errors}} = useForm();
-    //const {hospital, handleSubmit, formState:{Herrors}} = useForm();
-
-    const addHospital = async (data) => {
-        console.log(data)
-        const rawResponse = await fetch('http://192.168.10.159:3000/healthcare/hospital/add',{
-            method:'POST',
-            headers:{
-                'Accept':'application/json',
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify({
-                name:data.hospitalName,
-                location:data.hospitalLocation
-            })
-        })
+    function navi(){
+        Alert.alert(
+            "Success",
+            "Added hospital successfully",
+            [
+                {
+                    text:"Okay",
+                    onPress: ()=>{navigation.dispatch(StackActions.pop(1))}
+                }
+            ]
+        )
     }
-
 
     return (
       <View style={styles.main}>
@@ -88,7 +70,7 @@ function addingHospital({route, navigation}){
                 <View style={styles.menu}>
                     <View style={styles.addH}>
                         <View style={styles.form}>
-                            <MyForm/>
+                            <MyForm on={navi}/>
                         </View>
                     </View>
                 </View>

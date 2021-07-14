@@ -101,12 +101,6 @@ const Options = (props) => {
 
     }
 
-    function setDay(val){
-
-    }
-
-
-    
 
     const showV = () =>{
         setVisible(true)
@@ -114,9 +108,6 @@ const Options = (props) => {
     const hideV = () => {
         setVisible(false)
     }
-
-    //send to parent
-    //props.onChoice(item)
 
     let arr = value.time
 

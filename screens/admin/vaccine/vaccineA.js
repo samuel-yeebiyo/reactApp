@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Button, TouchableWithoutFeedback,TouchableOpacity, View, BackHandler } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Image, Text, TextInput, Alert, TouchableWithoutFeedback,TouchableOpacity, View, BackHandler } from 'react-native';
 import { Formik, Form, Field, useFormik } from 'formik';
 import { StackActions } from '@react-navigation/routers';
 import {useFonts, Poppins_400Regular, Poppins_700Bold} from '@expo-google-fonts/poppins'
@@ -19,6 +19,19 @@ function Vaccines({navigation}){
         return ()=>backHandler.remove()
     }, []);
 
+
+    function navi(){
+        Alert.alert(
+            "Success",
+            "Added vaccine successfully",
+            [
+                {
+                    text:"Okay",
+                    onPress: ()=>{navigation.dispatch(StackActions.pop(1))}
+                }
+            ]
+        )
+    }
 
     return (
         <View style={styles.main}>
@@ -57,6 +70,8 @@ function Vaccines({navigation}){
                                     information:values.information
                                 })
                             })
+
+                            navi()
                         }}>
 
                         {({ handleChange, handleSubmit, values }) => (
